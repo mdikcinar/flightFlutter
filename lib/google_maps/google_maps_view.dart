@@ -1,3 +1,4 @@
+import 'package:flightflutter/google_maps/flight_map_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -47,6 +48,7 @@ class GoogleMapsView extends GoogleMapsViewModel {
           width: MediaQuery.of(context).size.width - 100,
           child: Card(
             child: ListTile(
+              onTap: () => controller.animateCamera(CameraUpdate.newLatLng(flightList[index].latlong)),
               title: Text(flightList[index].country),
             ),
           ),
@@ -60,7 +62,7 @@ class GoogleMapsView extends GoogleMapsViewModel {
         initialCameraPosition: kLake,
         onMapCreated: (map) async {
           controller = map;
-          //await createMarkerImageFromAsset(context);
+          await createMarkerImageFromAsset(context);
         },
         markers: createMarker(),
       );
@@ -76,15 +78,15 @@ class GoogleMapsView extends GoogleMapsViewModel {
 
 extension _GoogleMapMarker on GoogleMapsView {
   Set<Marker> createMarker() {
-    return <Marker>[
-      Marker(
-        markerId: MarkerId('asdad'),
-        position: kLake.target,
-        //icon: dogIcon,
-        zIndex: 10,
-        //infoWindow: InfoWindow(title: 'Hello Dog'),
-      )
-    ].toSet();
+    return flightList
+        .map((e) => Marker(
+              markerId: MarkerId(e.hashCode.toString()),
+              position: e.latlong,
+              icon: dogIcon,
+              zIndex: 10,
+              infoWindow: InfoWindow(title: e.country),
+            ))
+        .toSet();
   }
 
   Future<void> createMarkerImageFromAsset(BuildContext context) async {

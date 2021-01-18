@@ -25,6 +25,8 @@ abstract class GoogleMapsViewModel extends State<GoogleMaps> {
         final jsonData = jsonDecode(response.body);
         if (jsonData is List) {
           flightList = jsonData.map((e) => FlightMap.fromJson(e)).cast<FlightMap>().toList();
+
+          controller.animateCamera(CameraUpdate.newLatLng(flightList.first.latlong));
           setState(() {});
         } else if (jsonData is Map) {
           // TODO
