@@ -13,23 +13,27 @@ class GoogleMapsView extends GoogleMapsViewModel {
       body: Stack(
         children: [
           buildGoogleMap,
-          Positioned(
-            height: pageHeight(context) * 0.15,
-            top: 20,
-            left: 0,
-            right: 0,
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              centerTitle: true,
-              title: Text(
-                'Hello',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ),
+          buildPositionedAppBar(context),
           bottomListView(),
         ],
+      ),
+    );
+  }
+
+  Positioned buildPositionedAppBar(BuildContext context) {
+    return Positioned(
+      height: pageHeight(context) * 0.15,
+      top: 20,
+      left: 0,
+      right: 0,
+      child: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'Hello',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
     );
   }
