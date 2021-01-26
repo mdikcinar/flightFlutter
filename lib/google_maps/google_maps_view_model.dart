@@ -18,6 +18,13 @@ abstract class GoogleMapsViewModel extends State<GoogleMaps> {
 
   List<FlightMap> flightList = [];
 
+  void navigateToRoot(int index) {
+    controller.animateCamera(CameraUpdate.newLatLng(flightList[index].latlong));
+  }
+
+  double pageWidth(BuildContext context) => MediaQuery.of(context).size.width;
+  double pageHeight(BuildContext context) => MediaQuery.of(context).size.height;
+
   Future initMapItemList() async {
     final response = await http.get('$firebaseServiceEndPoint.json');
     switch (response.statusCode) {

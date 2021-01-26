@@ -1,7 +1,7 @@
-import 'package:flightflutter/google_maps/flight_map_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'flight_map_model.dart';
 import 'google_maps_view_model.dart';
 
 class GoogleMapsView extends GoogleMapsViewModel {
@@ -11,7 +11,25 @@ class GoogleMapsView extends GoogleMapsViewModel {
     return Scaffold(
       //floatingActionButton: buildFloatingActionButton(),
       body: Stack(
-        children: [buildGoogleMap, bottomListView()],
+        children: [
+          buildGoogleMap,
+          Positioned(
+            height: pageHeight(context) * 0.15,
+            top: 20,
+            left: 0,
+            right: 0,
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              centerTitle: true,
+              title: Text(
+                'Hello',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          bottomListView(),
+        ],
       ),
     );
   }
@@ -25,7 +43,7 @@ class GoogleMapsView extends GoogleMapsViewModel {
   Positioned bottomListView() {
     return Positioned(
       bottom: 20,
-      left: 20,
+      left: -pageWidth(context) * 0.05,
       right: 5,
       height: 100,
       child: flightList.isEmpty ? loadingWidget : listViewFlights(),
@@ -38,17 +56,18 @@ class GoogleMapsView extends GoogleMapsViewModel {
         ),
       );
 
-  ListView listViewFlights() {
-    return ListView.builder(
+  Widget listViewFlights() {
+    return PageView.builder(
+      controller: PageController(viewportFraction: 0.8),
       scrollDirection: Axis.horizontal,
       itemCount: flightList.length,
-      shrinkWrap: true,
+      onPageChanged: (index) => navigateToRoot(index),
       itemBuilder: (context, index) {
         return SizedBox(
           width: MediaQuery.of(context).size.width - 100,
           child: Card(
             child: ListTile(
-              onTap: () => controller.animateCamera(CameraUpdate.newLatLng(flightList[index].latlong)),
+              //onTap: () => navigateToRoot(index),
               title: Text(flightList[index].country),
             ),
           ),
