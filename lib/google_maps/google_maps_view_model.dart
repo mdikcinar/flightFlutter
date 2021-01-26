@@ -6,8 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../core/device/constants.dart';
-import 'flight_map_model.dart';
-import 'google_maps.dart';
+import 'model/flight_map_model.dart';
+import 'view/google_maps.dart';
 
 abstract class GoogleMapsViewModel extends State<GoogleMaps> {
   // Add your state and logic here

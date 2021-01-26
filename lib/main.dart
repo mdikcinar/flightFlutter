@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'google_maps/google_maps.dart';
+import 'google_maps/view/google_maps.dart';
 
 void main() => runApp(MyApp());
 
